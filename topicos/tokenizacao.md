@@ -1,6 +1,6 @@
 ---
-titulo: "Tokenizacao"
-tags: ["nlp", "preprocessamento", "bpe", "texto", "vocabulario"]
+titulo: "Tokenização"
+tags: ["nlp", "pré-processamento", "bpe", "texto", "vocabulário"]
 prerequisitos: ["backpropagation"]
 nivel: "intermediario"
 tempoEstimado: 120
@@ -8,35 +8,35 @@ autor: "GAEIA"
 ultimaAtualizacao: "2026-02-03"
 ---
 
-# Tokenizacao
+# Tokenização
 
-**Teoria:** BPE (Byte Pair Encoding), vocabulario, tokens vs caracteres
+**Teoria:** BPE (Byte Pair Encoding), vocabulário, tokens vs caracteres
 
-**Pratica:** Implementar tokenizer BPE do zero
+**Prática:** Implementar tokenizer BPE do zero
 
-> Antes de transformar texto em vetores, precisamos decidir: qual a unidade basica? Caractere? Palavra? A resposta e mais sutil do que parece.
+> Antes de transformar texto em vetores, precisamos decidir: qual a unidade básica? Caractere? Palavra? A resposta é mais sutil do que parece.
 
 ---
 
 ## Papers Fundamentais
 
-- **Sennrich, Haddow & Birch (2016) - BPE for NMT** - Adaptacao do algoritmo de compressao para traducao
+- **Sennrich, Haddow & Birch (2016) - BPE for NMT** - Adaptação do algoritmo de compressão para tradução
   - [arxiv.org/abs/1508.07909](https://arxiv.org/abs/1508.07909)
 
-- **Kudo & Richardson (2018) - SentencePiece** - Tokenizacao language-independent, sem pre-tokenizacao
+- **Kudo & Richardson (2018) - SentencePiece** - Tokenização language-independent, sem pré-tokenização
   - [arxiv.org/abs/1808.06226](https://arxiv.org/abs/1808.06226)
 
-- **Kudo (2018) - Unigram Model** - Alternativa ao BPE: comeca grande e trima por loss
+- **Kudo (2018) - Unigram Model** - Alternativa ao BPE: começa grande e trima por loss
   - [arxiv.org/abs/1804.10959](https://arxiv.org/abs/1804.10959)
 
 ---
 
-## Videos e Tutoriais
+## Vídeos e Tutoriais
 
-- **Karpathy - Let's build the GPT Tokenizer** - Video dedicado so a tokenizacao
+- **Karpathy - Let's build the GPT Tokenizer** - Vídeo dedicado só à tokenização
   - [youtube.com/watch?v=zduSFxRajkE](https://youtube.com/watch?v=zduSFxRajkE)
 
-- **HuggingFace LLM Course - BPE Chapter** - Implementacao pedagogica completa
+- **HuggingFace LLM Course - BPE Chapter** - Implementação pedagógica completa
   - [huggingface.co/learn/llm-course/en/chapter6/5](https://huggingface.co/learn/llm-course/en/chapter6/5)
 
 - **Sebastian Raschka - BPE From Scratch** - Jupyter notebook standalone imitando tiktoken
@@ -44,40 +44,40 @@ ultimaAtualizacao: "2026-02-03"
 
 ---
 
-## Codigo de Referencia
+## Código de Referência
 
-- **Karpathy - minbpe** - Implementacao educacional de referencia: BasicTokenizer, RegexTokenizer (GPT-2), GPT4Tokenizer
+- **Karpathy - minbpe** - Implementação educacional de referência: BasicTokenizer, RegexTokenizer (GPT-2), GPT4Tokenizer
   - [github.com/karpathy/minbpe](https://github.com/karpathy/minbpe)
-  - Inclui `exercise.md` para pratica hands-on
+  - Inclui `exercise.md` para prática hands-on
 
-- **HuggingFace Tokenizers Summary** - Comparacao BPE vs WordPiece vs Unigram
+- **HuggingFace Tokenizers Summary** - Comparação BPE vs WordPiece vs Unigram
   - [huggingface.co/docs/transformers/en/tokenizer_summary](https://huggingface.co/docs/transformers/en/tokenizer_summary)
 
-- **rsennrich/subword-nmt** - Implementacao original dos autores do paper
+- **rsennrich/subword-nmt** - Implementação original dos autores do paper
   - [github.com/rsennrich/subword-nmt](https://github.com/rsennrich/subword-nmt)
 
 ---
 
-## Comparacao de Metodos
+## Comparação de Métodos
 
-| Metodo | Usado por | Estrategia |
+| Método | Usado por | Estratégia |
 |--------|-----------|------------|
 | **BPE** | GPT-2, GPT-4, LLaMA | Merge pares mais frequentes |
 | **WordPiece** | BERT | Merge pares que maximizam likelihood |
-| **Unigram** | XLNet, T5 | Comeca grande, trima por loss |
+| **Unigram** | XLNet, T5 | Começa grande, trima por loss |
 | **SentencePiece** | T5, LLaMA | Wrapper language-independent |
 
 ---
 
-## Entregavel
+## Entregável
 
-Tokenizer BPE treinado em Tiny Shakespeare com vocabulario de 256 tokens.
+Tokenizer BPE treinado em Tiny Shakespeare com vocabulário de 256 tokens.
 
 **Round-trip test:** `decode(encode(texto)) == texto` para qualquer string do corpus.
 
-**Metrica:** Calcule a taxa de compressao `(chars / tokens)` — deve ser > 2x.
+**Métrica:** Calcule a taxa de compressão `(chars / tokens)` — deve ser > 2x.
 
-**Voce deve conseguir explicar:** Por que tokens BPE sao melhores que caracteres individuais e melhores que palavras inteiras.
+**Você deve conseguir explicar:** Por que tokens BPE são melhores que caracteres individuais e melhores que palavras inteiras.
 
 ---
 
@@ -85,15 +85,15 @@ Tokenizer BPE treinado em Tiny Shakespeare com vocabulario de 256 tokens.
 
 - [ ] Assistir Karpathy GPT Tokenizer
 - [ ] Ler sobre BPE
-- [ ] Entender diferenca entre metodos
+- [ ] Entender diferença entre métodos
 - [ ] Implementar BPE do zero
 - [ ] Treinar em um corpus
 - [ ] Testar encode/decode
 
 ---
 
-## Conexoes
+## Conexões
 
-> **Fundamento:** Este topico usa conceitos de [[backpropagation]]
+> **Fundamento:** Este tópico usa conceitos de [[backpropagation]]
 >
-> **Proximo passo:** Aprenda como tokens viram vetores em [[embeddings-texto]]
+> **Próximo passo:** Aprenda como tokens viram vetores em [[embeddings-texto]]

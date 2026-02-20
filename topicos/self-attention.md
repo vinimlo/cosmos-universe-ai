@@ -1,6 +1,6 @@
 ---
 titulo: "Self-Attention"
-tags: ["transformer", "atencao", "nlp", "arquitetura", "softmax", "mascaramento-causal"]
+tags: ["transformer", "atenção", "nlp", "arquitetura", "softmax", "mascaramento-causal"]
 prerequisitos: ["embeddings-texto"]
 nivel: "intermediario"
 tempoEstimado: 120
@@ -8,17 +8,17 @@ autor: "GAEIA"
 ultimaAtualizacao: "2026-02-03"
 ---
 
-# Atencao como Conceito
+# Atenção como Conceito
 
-**Teoria:** Softmax como operacao, normas (L2), o conceito de "prestar atencao" em partes relevantes, mascaramento causal
+**Teoria:** Softmax como operação, normas (L2), o conceito de "prestar atenção" em partes relevantes, mascaramento causal
 
-**Pratica:** Implementar self-attention em matrizes pequenas (3x4, 4x4)
+**Prática:** Implementar self-attention em matrizes pequenas (3x4, 4x4)
 
-> Com as bases dos topicos anteriores, Q x K^T e "so" um dot product que voce ja domina, e softmax e "so" uma funcao que voce ja implementou.
+> Com as bases dos tópicos anteriores, Q x K^T é "só" um dot product que você já domina, e softmax é "só" uma função que você já implementou.
 
 ---
 
-## Videos Fundamentais
+## Vídeos Fundamentais
 
 - **3Blue1Brown - Attention in Transformers** - Queries como "perguntas", keys como "respostas", analogia adjetivo-substantivo
   - [3blue1brown.com/lessons/attention](https://3blue1brown.com/lessons/attention)
@@ -30,23 +30,23 @@ ultimaAtualizacao: "2026-02-03"
 - **Vaswani et al. (2017) - Attention Is All You Need** - O paper. Releia agora - vai ser outro paper.
   - [arxiv.org/abs/1706.03762](https://arxiv.org/abs/1706.03762)
 
-- **Lilian Weng - "Attention? Attention!"** - Survey mais completo: Bahdanau/Luong ate self-attention
+- **Lilian Weng - "Attention? Attention!"** - Survey mais completo: Bahdanau/Luong até self-attention
   - [lilianweng.github.io/posts/2018-06-24-attention](https://lilianweng.github.io/posts/2018-06-24-attention)
 
-- **Lilian Weng - Transformer Family v2.0** - Atualizacao cobrindo sparse attention, efficient transformers, MoE
+- **Lilian Weng - Transformer Family v2.0** - Atualização cobrindo sparse attention, efficient transformers, MoE
   - [lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2](https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2)
 
 ---
 
 ## Tutoriais Step-by-Step
 
-- **Jay Alammar - The Illustrated Transformer** - Leia com calma. A referencia visual definitiva.
+- **Jay Alammar - The Illustrated Transformer** - Leia com calma. A referência visual definitiva.
   - [jalammar.github.io/illustrated-transformer](https://jalammar.github.io/illustrated-transformer)
 
-- **Machine Learning Mastery - Attention from Scratch** - Calculo explicito: 4 embeddings, Q/K/V, dot product, softmax, weighted sums com NumPy
+- **Machine Learning Mastery - Attention from Scratch** - Cálculo explícito: 4 embeddings, Q/K/V, dot product, softmax, weighted sums com NumPy
   - [machinelearningmastery.com/the-attention-mechanism-from-scratch](https://machinelearningmastery.com/the-attention-mechanism-from-scratch)
 
-- **UvA Deep Learning Notebooks - Tutorial 6** - Material completo de curso universitario com exercicios
+- **UvA Deep Learning Notebooks - Tutorial 6** - Material completo de curso universitário com exercícios
   - [uvadlc-notebooks.readthedocs.io/.../tutorial6](https://uvadlc-notebooks.readthedocs.io/.../tutorial6)
 
 ---
@@ -66,37 +66,37 @@ ultimaAtualizacao: "2026-02-03"
 
 ## Mascaramento Causal
 
-Em modelos **decoder-only** como o GPT, cada posicao so pode "prestar atencao" em posicoes anteriores (e em si mesma). Isso e implementado com uma **mascara triangular** que seta scores de posicoes futuras para `-inf` antes do softmax, fazendo-os virar 0.
+Em modelos **decoder-only** como o GPT, cada posição só pode "prestar atenção" em posições anteriores (e em si mesma). Isso é implementado com uma **máscara triangular** que seta scores de posições futuras para `-inf` antes do softmax, fazendo-os virar 0.
 
 ```
-Mascara (sequencia de 4 tokens):
+Máscara (sequência de 4 tokens):
 [  0, -inf, -inf, -inf ]
 [  0,    0, -inf, -inf ]
 [  0,    0,    0, -inf ]
 [  0,    0,    0,    0 ]
 ```
 
-Sem essa mascara, o modelo "veria o futuro" durante o treino - como fazer uma prova ja sabendo as respostas. A diferenca fundamental: **BERT** usa attention bidirecional (sem mascara), **GPT** usa attention causal (com mascara). Voce vai implementar a versao causal em [[seu-gpt]].
+Sem essa máscara, o modelo "veria o futuro" durante o treino - como fazer uma prova já sabendo as respostas. A diferença fundamental: **BERT** usa attention bidirecional (sem máscara), **GPT** usa attention causal (com máscara). Você vai implementar a versão causal em [[seu-gpt]].
 
 ---
 
 ## Insight Chave
 
-O scaling por sqrt(d_k) importa: sem ele, dot products grandes causam saturacao do softmax e gradientes quase zero.
+O scaling por sqrt(d_k) importa: sem ele, dot products grandes causam saturação do softmax e gradientes quase zero.
 
-E como um parametro de "temperatura" - **sem scaling, a attention vira hard (one-hot) ao inves de soft**.
+É como um parâmetro de "temperatura" - **sem scaling, a attention vira hard (one-hot) ao invés de soft**.
 
 ---
 
-## Entregavel
+## Entregável
 
-Self-attention implementada em NumPy com uma frase curta (ex: 4 palavras). Crie embeddings simples de dimensao 4 para cada palavra.
+Self-attention implementada em NumPy com uma frase curta (ex: 4 palavras). Crie embeddings simples de dimensão 4 para cada palavra.
 
-**Inclua mascara causal.** Explique o que acontece com os scores de posicoes futuras.
+**Inclua máscara causal.** Explique o que acontece com os scores de posições futuras.
 
-**Visualize** a matriz de atencao como heatmap (matplotlib ou print formatado). Identifique qual token presta mais atencao em qual.
+**Visualize** a matriz de atenção como heatmap (matplotlib ou print formatado). Identifique qual token presta mais atenção em qual.
 
-**Voce deve conseguir apontar para um attention score e explicar:** "Esse token esta prestando atencao naquele porque..."
+**Você deve conseguir apontar para um attention score e explicar:** "Esse token está prestando atenção naquele porque..."
 
 ---
 
@@ -107,13 +107,13 @@ Self-attention implementada em NumPy com uma frase curta (ex: 4 palavras). Crie 
 - [ ] Reler paper Attention Is All You Need
 - [ ] Entender Q, K, V
 - [ ] Implementar self-attention em NumPy
-- [ ] Implementar mascara causal
+- [ ] Implementar máscara causal
 - [ ] Explicar attention scores
 
 ---
 
-## Conexoes
+## Conexões
 
-> **Fundamento:** Este topico usa conceitos de [[embeddings-texto]]
+> **Fundamento:** Este tópico usa conceitos de [[embeddings-texto]]
 >
-> **Proximo passo:** Monte o transformer completo em [[transformer]]
+> **Próximo passo:** Monte o transformer completo em [[transformer]]

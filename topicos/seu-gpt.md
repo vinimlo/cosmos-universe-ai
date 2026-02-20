@@ -1,18 +1,18 @@
 ---
 titulo: "Seu GPT"
-tags: ["projeto", "gpt", "transformer", "implementacao", "decoder-only", "autoregressive"]
+tags: ["projeto", "gpt", "transformer", "implementação", "decoder-only", "autoregressive"]
 prerequisitos: ["transformer", "tokenizacao"]
-nivel: "avancado"
+nivel: "avançado"
 tempoEstimado: 300
 autor: "GAEIA"
 ultimaAtualizacao: "2026-02-03"
 ---
 
-# Seu GPT (Entregavel Final)
+# Seu GPT (Entregável Final)
 
 **Teoria:** Decoder-only architecture, autoregressive generation
 
-**Pratica:** Juntar tokenizer + transformer blocks + training loop + geracao
+**Prática:** Juntar tokenizer + transformer blocks + training loop + geração
 
 ---
 
@@ -26,29 +26,29 @@ ultimaAtualizacao: "2026-02-03"
 
 ---
 
-## Implementacoes de Referencia
+## Implementações de Referência
 
 - **Karpathy - nanoGPT** - ~600 linhas que reproduzem GPT-2 (124M) no OpenWebText. Custo: ~$10 e ~1h no Lambda Labs
   - [github.com/karpathy/nanoGPT](https://github.com/karpathy/nanoGPT)
 
-- **Karpathy - build-nanogpt** - Video de 4h + commits limpos para acompanhar passo a passo
+- **Karpathy - build-nanogpt** - Vídeo de 4h + commits limpos para acompanhar passo a passo
   - [github.com/karpathy/build-nanogpt](https://github.com/karpathy/build-nanogpt)
 
-- **jaymody/picoGPT** - Forward pass em 40 linhas de NumPy - inferencia com pesos reais do GPT-2
+- **jaymody/picoGPT** - Forward pass em 40 linhas de NumPy - inferência com pesos reais do GPT-2
   - [github.com/jaymody/picoGPT](https://github.com/jaymody/picoGPT)
 
 ---
 
-## Hyperparameters de Referencia (nanoGPT 124M)
+## Hyperparameters de Referência (nanoGPT 124M)
 
-| Parametro | Valor | O que faz |
+| Parâmetro | Valor | O que faz |
 |-----------|-------|-----------|
-| **Learning rate** | 6e-4 | Tamanho do passo de atualizacao dos pesos. Muito alto = diverge, muito baixo = lento |
+| **Learning rate** | 6e-4 | Tamanho do passo de atualização dos pesos. Muito alto = diverge, muito baixo = lento |
 | **Weight decay** | 0.1 | Penaliza pesos grandes para evitar overfitting (multiplica pesos por 0.999 cada step) |
-| **Warmup** | Linear → cosine decay to 10% | Comeca com lr baixo, sobe linearmente, depois decai suavemente ate 10% do pico |
-| **Dropout** | 0.1 | Desliga 10% dos neuronios aleatoriamente durante treino, forcando redundancia |
-| **Activation** | GELU | Versao suave do ReLU (voce viu em [[mlp-e-matrizes]]) |
-| **Position embeddings** | Learned | Vetores aprendidos (nao sinusoidais) indicando posicao de cada token |
+| **Warmup** | Linear → cosine decay to 10% | Começa com lr baixo, sobe linearmente, depois decai suavemente até 10% do pico |
+| **Dropout** | 0.1 | Desliga 10% dos neurônios aleatoriamente durante treino, forçando redundância |
+| **Activation** | GELU | Versão suave do ReLU (você viu em [[mlp-e-matrizes]]) |
+| **Position embeddings** | Learned | Vetores aprendidos (não sinusoidais) indicando posição de cada token |
 
 ---
 
@@ -67,40 +67,40 @@ ultimaAtualizacao: "2026-02-03"
 
 | Dataset | Tamanho | Ideal para |
 |---------|---------|------------|
-| **Tiny Shakespeare** | ~1MB | Experimentos rapidos (incluso no nanoGPT) |
-| **TinyStories** | 2.14M historias | Modelos coerentes < 10M params em < 1 dia |
+| **Tiny Shakespeare** | ~1MB | Experimentos rápidos (incluso no nanoGPT) |
+| **TinyStories** | 2.14M histórias | Modelos coerentes < 10M params em < 1 dia |
 
 - [huggingface.co/datasets/roneneldan/TinyStories](https://huggingface.co/datasets/roneneldan/TinyStories)
 
 ---
 
-## Entregavel Final
+## Entregável Final
 
-**Marco intermediario (antes de treinar):** Faca um forward pass com input aleatorio. Verifique que o loss inicial e `~ln(vocab_size)` (distribuicao uniforme sobre o vocabulario).
+**Marco intermediário (antes de treinar):** Faça um forward pass com input aleatório. Verifique que o loss inicial é `~ln(vocab_size)` (distribuição uniforme sobre o vocabulário).
 
 **Montagem passo a passo:**
-1. Use seu tokenizer (topico 6) para processar Tiny Shakespeare
-2. Use seus blocos Transformer (topico 8) empilhados com embedding + head
-3. Adapte seu training loop (topico 4) para PyTorch com AdamW
-4. Implemente geracao autoregressiva (novo)
+1. Use seu tokenizer (tópico 6) para processar Tiny Shakespeare
+2. Use seus blocos Transformer (tópico 8) empilhados com embedding + head
+3. Adapte seu training loop (tópico 4) para PyTorch com AdamW
+4. Implemente geração autoregressiva (novo)
 5. Treine e avalie
 
 ### Tier 1 - Laptop (sem GPU dedicada)
-GPT **character-level**, ~1M parametros. Apos 5000 iteracoes, deve gerar texto com palavras reconheciveis em ingles.
+GPT **character-level**, ~1M parâmetros. Após 5000 iterações, deve gerar texto com palavras reconhecíveis em inglês.
 
 ### Tier 2 - Com GPU
-GPT **token-level** (BPE), ~10-30M parametros. Apos treinamento completo, deve gerar historias de 3-5 frases com coerencia gramatical.
+GPT **token-level** (BPE), ~10-30M parâmetros. Após treinamento completo, deve gerar histórias de 3-5 frases com coerência gramatical.
 
-**Voce deve conseguir explicar:** Por que o loss inicial deveria ser aproximadamente `ln(vocab_size)`.
+**Você deve conseguir explicar:** Por que o loss inicial deveria ser aproximadamente `ln(vocab_size)`.
 
 ---
 
 ## Guia de Hardware e Setup
 
 **Setup PyTorch:**
-- **NVIDIA GPU:** `pip install torch` (CUDA ja incluso nas builds oficiais)
-- **Apple Silicon:** `pip install torch` (suporte MPS automatico desde PyTorch 2.0)
-- **CPU only:** Funciona, mas so viavel para Tier 1
+- **NVIDIA GPU:** `pip install torch` (CUDA já incluso nas builds oficiais)
+- **Apple Silicon:** `pip install torch` (suporte MPS automático desde PyTorch 2.0)
+- **CPU only:** Funciona, mas só viável para Tier 1
 
 **Tempos estimados de treino:**
 
@@ -110,7 +110,7 @@ GPT **token-level** (BPE), ~10-30M parametros. Apos treinamento completo, deve g
 | NVIDIA RTX 3090/4090 | ~2 min | ~1-2h |
 | Google Colab (T4 free) | ~5 min | ~4-8h |
 
-**Opcoes cloud (se nao tem GPU):**
+**Opções cloud (se não tem GPU):**
 - **Google Colab** - Gratuito com T4, suficiente para Tier 2
 - **Lambda Labs** - ~$1/hr para uma A10G, treina Tier 2 em ~1h
 
@@ -118,31 +118,31 @@ GPT **token-level** (BPE), ~10-30M parametros. Apos treinamento completo, deve g
 
 ## Checklist
 
-- [ ] Revisar topicos anteriores
+- [ ] Revisar tópicos anteriores
 - [ ] Configurar ambiente PyTorch/MLX
 - [ ] Integrar tokenizer + transformer
 - [ ] Implementar training loop
 - [ ] Escolher dataset e tier
 - [ ] Treinar modelo
-- [ ] Implementar geracao de texto
+- [ ] Implementar geração de texto
 - [ ] Avaliar qualidade do texto gerado
 
 ---
 
-## Conclusao
+## Conclusão
 
-**Voce construiu um GPT.** De um unico neuronio com dot product ate um transformer autoregressivo que gera texto - cada peca foi implementada e entendida por voce.
+**Você construiu um GPT.** De um único neurônio com dot product até um transformer autoregressivo que gera texto - cada peça foi implementada e entendida por você.
 
-### Proximos passos sugeridos:
-- **Fine-tuning:** Adapte seu modelo para uma tarefa especifica
-- **Scaling:** Experimente aumentar layers, heads, dimensao - observe o que muda
-- **Leia GPT-3/LLaMA papers:** Agora voce tem vocabulario para entender as decisoes de design
-- **RLHF/DPO:** Entenda como modelos sao alinhados apos o pre-treino
+### Próximos passos sugeridos:
+- **Fine-tuning:** Adapte seu modelo para uma tarefa específica
+- **Scaling:** Experimente aumentar layers, heads, dimensão - observe o que muda
+- **Leia GPT-3/LLaMA papers:** Agora você tem vocabulário para entender as decisões de design
+- **RLHF/DPO:** Entenda como modelos são alinhados após o pré-treino
 
 ---
 
-## Conexoes
+## Conexões
 
-> **Fundamento:** Este topico integra [[transformer]] e [[tokenizacao]]
+> **Fundamento:** Este tópico integra [[transformer]] e [[tokenizacao]]
 >
-> **Parabens!** Voce completou a trilha LLM do Zero!
+> **Parabéns!** Você completou a trilha LLM do Zero!
